@@ -1,5 +1,5 @@
 import data from './data.js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
   const [names, setNames] = useState(data);
@@ -12,6 +12,14 @@ const App = () => {
     const filterOutNames = names.filter((name) => name !== names[randomIndex]);
     setNames(filterOutNames);
   }
+
+  useEffect(() => {
+    const filteringTimer = setTimeout(() => {
+      startRaffle();
+    }, 1000)
+    return() => clearTimeout(filteringTimer);
+  }, [names, startRaffle])
+
   return (
     <div>
       <button onClick={startRaffle}>

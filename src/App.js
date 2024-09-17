@@ -3,15 +3,11 @@ import { useTransition, animated } from 'react-spring';
 import shuffle from 'lodash/shuffle';
 import Confetti from 'react-confetti';
 
-import data from './data';
-import '././App.css';
-// import HeadingImage from '../src/images/heading.svg';
-// import Play from '../src/images/play.svg';
-// import Reshuffle from '../src/images/reshuffle.svg';
-// import Replay from '../src/images/replay.svg';
+import jsonData from './data.json'; // Assuming your JSON file is named 'data.json'
+import './App.css';
 
 function App() {
-  const [names, setNames] = useState(data);
+  const [names, setNames] = useState([]);
   const [initialLoad, setInitialLoad] = useState(false);
   const [windowHeight, setWindowHeight] = useState(null);
   const [windowWidth, setWindowWidth] = useState(null);
@@ -19,8 +15,22 @@ function App() {
   const [wraffling, setWraffling] = useState(false);
   const confettiWrapper = useRef(null);
   const height = 60;
+
+  // Function to extract names from JSON data (filtering empty full_name fields)
+  const getFullNames = (data) => {
+    return data.items
+      .map(item => item.full_name)
+      .filter(name => name.trim() !== "");  // Filter out empty names
+  };
+
+  // Set names when component is mounted
+  useEffect(() => {
+    const fullNamesList = getFullNames(jsonData.data);  // Extract full names from jsonData
+    setNames(fullNamesList);  // Set the state with the extracted names
+  }, []);
+
   const transitions = useTransition(
-    names.map((data, i) => ({ ...data, y: 0.5 * i })),
+    names.map((data, i) => ({ name: data, y: 0.5 * i })), // Adjusted to map full names
     (d) => d.name,
     {
       from: { position: 'initial', opacity: 0 },
@@ -47,7 +57,7 @@ function App() {
 
   function restartRaffle() {
     setInitialLoad(false);
-    setNames(data);
+    setNames(getFullNames(jsonData.data));  // Reset names to the initial list
     setWraffling(false);
     setShowConfetti(false);
   }
@@ -75,14 +85,12 @@ function App() {
         {!initialLoad && (
           <div className="raffle-header__buttons">
             <button className="button-primary" onClick={startRaffle}>
-              
               Start Raffle
             </button>
             <button
               className="button-outline"
               onClick={() => setNames(shuffle(names))}
             >
-              
               Shuffle
             </button>
           </div>
@@ -107,7 +115,7 @@ function App() {
             }}
           >
             <div className="raffle-namelist">
-              <span>{item.name}</span>
+              <span>{item.name}</span> {/* Display full name */}
             </div>
           </animated.div>
         ))}
@@ -117,7 +125,6 @@ function App() {
           <div className="raffle-ends">
             <h3>Congratulations! You have won the raffle!</h3>
             <button className="button-outline" onClick={restartRaffle}>
-              
               Replay
             </button>
           </div>

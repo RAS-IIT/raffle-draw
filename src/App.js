@@ -3,7 +3,7 @@ import { useTransition, animated } from 'react-spring';
 import shuffle from 'lodash/shuffle';
 import Confetti from 'react-confetti';
 
-import jsonData from './FINAL-new-followers-api4.json'; // Assuming your JSON file is named 'data.json'
+import jsonData from './FINAL-new-followers-api4.json'; // Assuming your JSON file is named 'FINAL-new-followers-api4.json'
 import './App.css';
 
 function App() {
@@ -18,14 +18,14 @@ function App() {
 
   // Function to extract names from JSON data (filtering empty full_name fields)
   const getFullNames = (data) => {
-    return data.items
-      .map(item => item.full_name)
+    return data.new_followers
+      .map(follower => follower.full_name)  // Extract full_name
       .filter(name => name.trim() !== "");  // Filter out empty names
   };
 
   // Set names when component is mounted
   useEffect(() => {
-    const fullNamesList = getFullNames(jsonData.data);  // Extract full names from jsonData
+    const fullNamesList = getFullNames(jsonData);  // Extract full names from jsonData
     setNames(fullNamesList);  // Set the state with the extracted names
   }, []);
 

@@ -3,7 +3,7 @@ import { useTransition, animated } from 'react-spring';
 import shuffle from 'lodash/shuffle';
 import Confetti from 'react-confetti';
 
-import jsonData from './data.json'; // Assuming your JSON file is named 'data.json'
+import jsonData from './FINAL-new-followers-api4.json'; // Assuming your JSON file is named 'data.json'
 import './App.css';
 
 function App() {

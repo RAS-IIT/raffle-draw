@@ -15,7 +15,7 @@ headers = {
 
 response = requests.post(url, json=payload, headers=headers)
 
-with open('src/api/api4.json', 'w') as json_file:
+with open('src/api4.json', 'w') as json_file:
     json.dump(response.json(), json_file, indent=4)
 
 print("Response saved to instagram_followers.json")

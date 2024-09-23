@@ -5,6 +5,7 @@ import Confetti from 'react-confetti';
 
 import jsonData from './FINAL-new-followers-api4.json'; // Assuming your JSON file is named 'FINAL-new-followers-api4.json'
 import './App.css';
+import Logo from './logo.png';
 
 function App() {
   const [names, setNames] = useState([]);
@@ -129,6 +130,10 @@ function App() {
             </button>
           </div>
         )}
+      </div>
+       {/* Bottom bar for logo */}
+       <div className="bottom-bar">
+        <img src={Logo} alt="Logo" className="bottom-bar-logo" />
       </div>
     </div>
   );

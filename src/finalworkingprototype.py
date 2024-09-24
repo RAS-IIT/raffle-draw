@@ -35,7 +35,7 @@ if 'response' in followers_after and 'body' in followers_after['response']:
 else:
     raise KeyError("Expected keys 'response' and 'body' not found in the API response.")
 
-with open('src/api4.json', 'r') as f:
+with open('src/api4.json', 'r', encoding='utf-8') as f:
     followers_before = json.load(f)
 
 before_users = {user['pk'] for user in followers_before['response']['body']['users']}
@@ -49,7 +49,7 @@ output = {
     "new_followers": new_followers_list
 }
 
-with open('src/FINAL-new-followers-api4.json', 'w') as f:
+with open('src/FINAL-new-followers-api4.json', 'w', encoding='utf-8') as f:
     json.dump(output, f, indent=4)
 
 #save_usernames_to_json("FINAL-new-followers-api4.json", "correctstructure.json")
